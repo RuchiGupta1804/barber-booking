@@ -33,7 +33,10 @@ export default function BookAppointment() {
     const load = async () => {
       try {
         const res = await API.get("/services", { params: { user: "true" } });
-        setServices(res.data.services || res.data);
+        // Safe check
+        const srv = res.data?.services || res.data || [];
+        if (Array.isArray(srv)) setServices(srv);
+        else setServices([]);
       } catch (err) {
         setError("Failed to load services");
       } finally {
@@ -122,20 +125,20 @@ export default function BookAppointment() {
 
   // ---------------- SLOT RANGE LABEL ----------------
   const getSlotRangeLabel = (slot, totalTime) => {
-  if (!slot) return "";
-  const start = new Date(slot.startTime);
-  const end = new Date(start.getTime() + totalTime * 60000);
+    if (!slot) return "";
+    const start = new Date(slot.startTime);
+    const end = new Date(start.getTime() + totalTime * 60000);
 
-  const format = (d) =>
-    d.toLocaleTimeString("en-IN", {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
-      timeZone: "Asia/Kolkata",
-    });
+    const format = (d) =>
+      d.toLocaleTimeString("en-IN", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+        timeZone: "Asia/Kolkata",
+      });
 
-  return `${format(start)} - ${format(end)}`;
-};
+    return `${format(start)} - ${format(end)}`;
+  };
 
   // ---------------- BOOKING ----------------
   const handleBooking = async () => {
@@ -269,15 +272,9 @@ export default function BookAppointment() {
             today.setHours(0, 0, 0, 0);
             setDate(e.target.value);
             if (d.getDay() === 4)
-              setErrors((prev) => ({
-                ...prev,
-                date: "Store is closed on Thursdays",
-              }));
+              setErrors((prev) => ({ ...prev, date: "Store is closed on Thursdays" }));
             else if (d < today)
-              setErrors((prev) => ({
-                ...prev,
-                date: "Cannot select past date",
-              }));
+              setErrors((prev) => ({ ...prev, date: "Cannot select past date" }));
             else setErrors((prev) => ({ ...prev, date: "" }));
           }}
           onBlur={() => setTouched((t) => ({ ...t, date: true }))}
@@ -300,48 +297,46 @@ export default function BookAppointment() {
             marginTop: "10px",
           }}
         >
-          {services.map((s) => {
-            const isSelected = selectedServices.some(
-              (x) => x._id === s._id
-            );
-
-            return (
-              <div
-                key={s._id}
-                onClick={() => toggleService(s)}
-                style={{
-                  cursor: "pointer",
-                  borderRadius: "10px",
-                  overflow: "hidden",
-                  boxShadow: isSelected
-                    ? "0 0 0 3px #bf5a7b"
-                    : "0 2px 6px rgba(0,0,0,0.15)",
-                  transform: isSelected ? "scale(1.02)" : "scale(1)",
-                  transition: "0.15s",
-                  background: "#fff",
-                }}
-              >
-                <img
-                  src={`http://localhost:5000${s.image}`}
-                  alt={s.name}
+          {Array.isArray(services) &&
+            services.map((s) => {
+              const isSelected = selectedServices.some((x) => x._id === s._id);
+              return (
+                <div
+                  key={s._id}
+                  onClick={() => toggleService(s)}
                   style={{
-                    width: "100%",
-                    height: "140px",
-                    objectFit: "cover",
+                    cursor: "pointer",
+                    borderRadius: "10px",
+                    overflow: "hidden",
+                    boxShadow: isSelected
+                      ? "0 0 0 3px #bf5a7b"
+                      : "0 2px 6px rgba(0,0,0,0.15)",
+                    transform: isSelected ? "scale(1.02)" : "scale(1)",
+                    transition: "0.15s",
+                    background: "#fff",
                   }}
-                />
+                >
+                  <img
+                    src={`${import.meta.env.VITE_API_URL.replace("/api","")}${s.image}`}
+                    alt={s.name}
+                    style={{
+                      width: "100%",
+                      height: "140px",
+                      objectFit: "cover",
+                    }}
+                  />
 
-                <div style={{ padding: "10px", textAlign: "center" }}>
-                  <p style={{ fontWeight: "600", marginBottom: "4px" }}>
-                    {s.name}
-                  </p>
-                  <p style={{ fontSize: "0.9rem", color: "#555" }}>
-                    ₹{s.price} • {s.duration} mins
-                  </p>
+                  <div style={{ padding: "10px", textAlign: "center" }}>
+                    <p style={{ fontWeight: "600", marginBottom: "4px" }}>
+                      {s.name}
+                    </p>
+                    <p style={{ fontSize: "0.9rem", color: "#555" }}>
+                      ₹{s.price} • {s.duration} mins
+                    </p>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
 
         {touched.services && errors.services && (
