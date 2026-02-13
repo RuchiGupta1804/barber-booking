@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "../utils/axiosInstance";
+import axios from "../utils/axiosInstance"; // axiosInstance now uses VITE_API_URL
 
 const BarberServices = () => {
   const [services, setServices] = useState([]);
@@ -20,7 +20,7 @@ const BarberServices = () => {
   const [editPrice, setEditPrice] = useState("");
   const [editCategory, setEditCategory] = useState("");
 
-  // ✅ SORT FILTERS ONLY
+  // Sort filters
   const [priceSort, setPriceSort] = useState("");
   const [durationSort, setDurationSort] = useState("");
 
@@ -33,7 +33,7 @@ const BarberServices = () => {
     loadServices();
   }, []);
 
-  // ✅ ADD
+  // Add new service
   const handleAddService = async () => {
     try {
       setError("");
@@ -70,7 +70,7 @@ const BarberServices = () => {
     }
   };
 
-  // ✅ EDIT
+  // Edit service
   const handleEditClick = (service) => {
     setEditingId(service._id);
     setEditName(service.name);
@@ -90,13 +90,13 @@ const BarberServices = () => {
     loadServices();
   };
 
-  // ✅ TOGGLE ACTIVE / INACTIVE
+  // Toggle active/inactive
   const toggleActive = async (id) => {
     await axios.patch(`/services/${id}/toggle`);
     loadServices();
   };
 
-  // ✅ SORT LOGIC
+  // Sort logic
   const sortedServices = [...services].sort((a, b) => {
     if (priceSort === "low") return a.price - b.price;
     if (priceSort === "high") return b.price - a.price;
@@ -112,7 +112,7 @@ const BarberServices = () => {
     <div style={{ padding: "2rem", background: "#f6f8fb", minHeight: "100vh" }}>
       <h2 style={{ marginBottom: "1rem" }}>💈 Service Management</h2>
 
-      {/* ---------- SORT BAR ---------- */}
+      {/* Sort bar */}
       <div style={{ display: "flex", gap: "0.7rem", flexWrap: "wrap", marginBottom: "1.5rem" }}>
         <select value={priceSort} onChange={(e) => setPriceSort(e.target.value)} style={inputSmall}>
           <option value="">Sort by Price</option>
@@ -127,7 +127,7 @@ const BarberServices = () => {
         </select>
       </div>
 
-      {/* ---------- ADD FORM ---------- */}
+      {/* Add form */}
       <div style={formCard}>
         <h4 style={{ marginBottom: "0.7rem" }}>➕ Add New Service</h4>
 
@@ -145,15 +145,18 @@ const BarberServices = () => {
         </button>
       </div>
 
-      {/* ---------- ACTIVE SERVICES ---------- */}
+      {/* Active Services */}
       <h3 style={{ marginTop: "2rem", marginBottom: "0.6rem" }}>🟢 Active Services</h3>
-
       <div style={grid}>
         {activeServices.length === 0 && <p style={{ color: "#888" }}>No active services</p>}
-
         {activeServices.map((service) => (
           <div key={service._id} style={card}>
-            <img src={`http://localhost:5000${service.image}`} alt={service.name} style={imageStyle} />
+            {/* 🔥 Updated image URL */}
+            <img
+              src={`${import.meta.env.VITE_API_URL.replace("/api", "")}${service.image}`}
+              alt={service.name}
+              style={imageStyle}
+            />
 
             {editingId === service._id ? (
               <>
@@ -184,15 +187,17 @@ const BarberServices = () => {
         ))}
       </div>
 
-      {/* ---------- INACTIVE SERVICES ---------- */}
+      {/* Inactive Services */}
       <h3 style={{ marginTop: "2.5rem", marginBottom: "0.6rem" }}>🔴 Inactive Services</h3>
-
       <div style={grid}>
         {inactiveServices.length === 0 && <p style={{ color: "#888" }}>No inactive services</p>}
-
         {inactiveServices.map((service) => (
           <div key={service._id} style={{ ...card, opacity: 0.6 }}>
-            <img src={`http://localhost:5000${service.image}`} alt={service.name} style={imageStyle} />
+            <img
+              src={`${import.meta.env.VITE_API_URL.replace("/api", "")}${service.image}`}
+              alt={service.name}
+              style={imageStyle}
+            />
 
             <h4 style={{ margin: "0.3rem 0" }}>{service.name}</h4>
             <p style={{ margin: "0.2rem 0" }}>⏱ {service.duration} mins</p>
@@ -210,8 +215,7 @@ const BarberServices = () => {
   );
 };
 
-/* ---------------- TOGGLE SWITCH ---------------- */
-
+/* ---------------- Toggle Switch ---------------- */
 const ToggleSwitch = ({ checked, onChange }) => (
   <div
     onClick={onChange}
@@ -241,87 +245,16 @@ const ToggleSwitch = ({ checked, onChange }) => (
   </div>
 );
 
-/* ---------------- STYLES ---------------- */
-
-const grid = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))",
-  gap: "1.1rem",
-};
-
-const formCard = {
-  background: "#fff",
-  padding: "1rem",
-  borderRadius: "12px",
-  maxWidth: "420px",
-  marginBottom: "2rem",
-  boxShadow: "0 6px 15px rgba(0,0,0,0.08)",
-};
-
-const card = {
-  background: "#fff",
-  borderRadius: "14px",
-  padding: "0.7rem",
-  boxShadow: "0 6px 16px rgba(0,0,0,0.1)",
-};
-
-const imageStyle = {
-  width: "100%",
-  height: "140px",
-  objectFit: "cover",
-  borderRadius: "10px",
-};
-
-const input = {
-  width: "100%",
-  padding: "0.5rem",
-  marginBottom: "0.6rem",
-  borderRadius: "6px",
-  border: "1px solid #ccc",
-};
-
-const inputSmall = {
-  padding: "0.4rem",
-  borderRadius: "6px",
-  border: "1px solid #ccc",
-};
-
-const primaryBtn = {
-  background: "#2c3e50",
-  color: "#fff",
-  border: "none",
-  padding: "0.45rem 0.8rem",
-  borderRadius: "6px",
-  cursor: "pointer",
-};
-
-const successBtn = {
-  background: "#27ae60",
-  color: "#fff",
-  border: "none",
-  padding: "0.35rem 0.6rem",
-  borderRadius: "6px",
-  cursor: "pointer",
-  marginRight: "0.4rem",
-};
-
-const infoBtn = {
-  background: "#2980b9",
-  color: "#fff",
-  border: "none",
-  padding: "0.35rem 0.6rem",
-  borderRadius: "6px",
-  cursor: "pointer",
-  marginRight: "0.4rem",
-};
-
-const grayBtn = {
-  background: "#7f8c8d",
-  color: "#fff",
-  border: "none",
-  padding: "0.35rem 0.6rem",
-  borderRadius: "6px",
-  cursor: "pointer",
-};
+/* ---------------- Styles ---------------- */
+const grid = { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))", gap: "1.1rem" };
+const formCard = { background: "#fff", padding: "1rem", borderRadius: "12px", maxWidth: "420px", marginBottom: "2rem", boxShadow: "0 6px 15px rgba(0,0,0,0.08)" };
+const card = { background: "#fff", borderRadius: "14px", padding: "0.7rem", boxShadow: "0 6px 16px rgba(0,0,0,0.1)" };
+const imageStyle = { width: "100%", height: "140px", objectFit: "cover", borderRadius: "10px" };
+const input = { width: "100%", padding: "0.5rem", marginBottom: "0.6rem", borderRadius: "6px", border: "1px solid #ccc" };
+const inputSmall = { padding: "0.4rem", borderRadius: "6px", border: "1px solid #ccc" };
+const primaryBtn = { background: "#2c3e50", color: "#fff", border: "none", padding: "0.45rem 0.8rem", borderRadius: "6px", cursor: "pointer" };
+const successBtn = { background: "#27ae60", color: "#fff", border: "none", padding: "0.35rem 0.6rem", borderRadius: "6px", cursor: "pointer", marginRight: "0.4rem" };
+const infoBtn = { background: "#2980b9", color: "#fff", border: "none", padding: "0.35rem 0.6rem", borderRadius: "6px", cursor: "pointer", marginRight: "0.4rem" };
+const grayBtn = { background: "#7f8c8d", color: "#fff", border: "none", padding: "0.35rem 0.6rem", borderRadius: "6px", cursor: "pointer" };
 
 export default BarberServices;

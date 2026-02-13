@@ -42,7 +42,7 @@ const Services = () => {
             }}
           >
             <img
-              src={`http://localhost:5000${s.image}`}
+               src={`${import.meta.env.VITE_API_URL.replace("/api", "")}${s.image}`}
               alt={s.name}
               style={{ width: "100%", height: "160px", objectFit: "cover" }}
             />
