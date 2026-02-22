@@ -1,7 +1,7 @@
-# 🤖 BookMyTrim – Full-Stack Appointment Scheduling Platform
+# 💇‍♀️ MySalon – Full-Stack Appointment Scheduling Platform
 
 Simplify barber appointment booking with a smart full-stack platform.
-BookMyTrim is a cloud-ready full-stack appointment scheduling system built using the MERN stack.
+MySalon is a cloud-ready full-stack appointment scheduling system built using the MERN stack.
 It allows customers to book barber appointments seamlessly while enabling barbers to manage services, appointments, business insights, and availability through a secure dashboard.
 
 ---
@@ -20,7 +20,6 @@ It allows customers to book barber appointments seamlessly while enabling barber
 - 🛠️ Manage services (Create, Read, Update, Delete)
 - 📈 Track monthly earnings & analytics
 - 📜 View complete appointment history
-- 📥 Download appointment history as CSV file
 - 🗓️ Add leave and block unavailable dates
 - 🚫 Prevent double booking conflicts
 
@@ -34,7 +33,6 @@ It allows customers to book barber appointments seamlessly while enabling barber
 - Node.js – Backend runtime
 - Docker – Containerization
 - REST API – Backend communication
-- CSV Export – Appointment history download
 
 ---
 
@@ -42,7 +40,7 @@ It allows customers to book barber appointments seamlessly while enabling barber
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/ManvendraPardeshi03/barber-project.git
+git clone https://github.com/RuchiGupta/barber-booking.git
 cd barber-project
 ```
 2. **Run the project using Docker (Recommended)**
@@ -53,7 +51,7 @@ docker-compose up --build
 3. **Access the application**
 ```bash
 Frontend:
-http://localhost:4173/
+http://localhost:5173/
 Backend API:
 http://localhost:5000/
 ```
@@ -71,7 +69,7 @@ PORT=5000
 
 # 📁 Project Structure
 ```bash
-Barber Project
+Barber booking
 ├── backend
 │   ├── models
 │   ├── routes
@@ -97,9 +95,8 @@ Barber Project
   4. Appointment stored in MongoDB
 ## Barber Side
   1. Login via footer
-       (EXAMPLE EMAIL: test@example.com, EXAMPLE PASS: 123456)
+       (EXAMPLE EMAIL: beautician@example.com, EXAMPLE PASS: 123456)
   2. View appointments in dashboard
-  3. Manage services (CRUD)  
-  4. Track monthly performance  
-  5. Download CSV history  
-  6. Add leave to block availability
+  3. Manage services (CRUD)
+  4. track performance  
+  5. Add leave to block availability
