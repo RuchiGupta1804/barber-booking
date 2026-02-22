@@ -1,127 +1,105 @@
-💇‍♀️ My Salon – Full-Stack Appointment Booking System
+# 🤖 BookMyTrim – Full-Stack Appointment Scheduling Platform
 
-My Salon is a modern full-stack salon appointment booking platform built using the MERN stack.
-It allows customers to book salon services online while enabling the admin to manage appointments, services, and availability through a secure dashboard.
+Simplify barber appointment booking with a smart full-stack platform.
+BookMyTrim is a cloud-ready full-stack appointment scheduling system built using the MERN stack.
+It allows customers to book barber appointments seamlessly while enabling barbers to manage services, appointments, business insights, and availability through a secure dashboard.
 
-🚀 Features
-👩‍💻 Customer Features
+---
 
-📅 Select preferred date and time slot
+# 🚀 Features
 
-💄 Browse available salon services
+## 👤 Customer Features
+- 📅 Select date and time slots
+- 💈 Browse available services
+- ✅ Book appointments instantly
+- 📱 Responsive and user-friendly interface
 
-📝 Book appointments instantly
+## 💼 Barber Dashboard
+- 🔐 Secure barber login (accessible via footer)
+- 📊 View all booked appointments
+- 🛠️ Manage services (Create, Read, Update, Delete)
+- 📈 Track monthly earnings & analytics
+- 📜 View complete appointment history
+- 📥 Download appointment history as CSV file
+- 🗓️ Add leave and block unavailable dates
+- 🚫 Prevent double booking conflicts
 
-📱 Fully responsive user interface
+---
 
-⚡ Smooth and fast booking experience
+# 🧰 Tech Stack
 
-🔐 Admin Dashboard Features
+- MongoDB – Database
+- Express.js – Backend framework
+- React.js – Frontend library
+- Node.js – Backend runtime
+- Docker – Containerization
+- REST API – Backend communication
+- CSV Export – Appointment history download
 
-🔑 Secure Admin Login
+---
 
-📊 View all booked appointments
+# 💻 How to Run the Website Locally
 
-🛠️ Manage Services (Create, Read, Update, Delete)
-
-📆 Block unavailable dates
-
-🚫 Prevent double booking conflicts
-
-📈 Track and manage all customer bookings
-
-🧰 Tech Stack
-
-MongoDB – Database
-
-Express.js – Backend Framework
-
-React.js – Frontend Library
-
-Node.js – Backend Runtime
-
-REST API – Communication between frontend & backend
-
-Docker – Containerization
-
-💻 How to Run the Website Locally
-Clone the repository
-
-git clone https://github.com/RuchiGupta1804/my-salon.git
-
-cd my-salon
-
-Run the project using Docker (Recommended)
-
+1. **Clone the repository**
+```bash
+git clone https://github.com/ManvendraPardeshi03/barber-project.git
+cd barber-project
+```
+2. **Run the project using Docker (Recommended)**
 Make sure Docker and Docker Compose are installed and running.
-
+```bash
 docker-compose up --build
-
-Access the application
-
+```
+3. **Access the application**
+```bash
 Frontend:
-http://localhost:5173/
-
+http://localhost:4173/
 Backend API:
 http://localhost:5000/
+```
 
-🔐 Environment Setup
+---
 
+# 🔐 Environment Setup
 Create a .env file inside the backend folder:
-
+```bash
 MONGO_URI=your_mongodb_connection_string
 PORT=5000
-JWT_SECRET=your_secret_key
+```
 
-📁 Project Structure
+---
 
-My Salon
+# 📁 Project Structure
+```bash
+Barber Project
 ├── backend
-│ ├── models
-│ ├── routes
-│ ├── controllers
-│ ├── middleware
-│ └── server.js
+│   ├── models
+│   ├── routes
+│   ├── controllers
+│   └── server.js
 ├── frontend
-│ ├── components
-│ ├── pages
-│ ├── context
-│ └── App.jsx
+│   ├── components
+│   ├── pages
+│   └── dashboard
 ├── docker-compose.yml
 ├── Dockerfile
 └── README.md
+```
 
-📌 Example Workflow
-👩 Customer Side
+---
 
-Browse available salon services
+# 📌 Example Workflow
 
-Select preferred date & available time slot
-
-Confirm booking
-
-Appointment stored in MongoDB database
-
-🔐 Admin Side
-
-Login securely
-
-View appointments in dashboard
-
-Manage services (Add / Edit / Delete)
-
-Block unavailable dates
-
-Monitor all customer bookings
-
-🎯 Project Highlights
-
-Demonstrates full MERN stack implementation
-
-Real-world CRUD operations
-
-Authentication & protected routes
-
-REST API integration
-
-Dockerized application setup
+## Customer Side
+  1. Browse services  
+  2. Select date and available time slot  
+  3. Confirm booking  
+  4. Appointment stored in MongoDB
+## Barber Side
+  1. Login via footer
+       (EXAMPLE EMAIL: test@example.com, EXAMPLE PASS: 123456)
+  2. View appointments in dashboard
+  3. Manage services (CRUD)  
+  4. Track monthly performance  
+  5. Download CSV history  
+  6. Add leave to block availability
