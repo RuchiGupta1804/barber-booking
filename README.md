@@ -40,8 +40,8 @@ It allows customers to book barber appointments seamlessly while enabling barber
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/RuchiGupta/barber-booking.git
-cd barber-project
+git clone https://github.com/RuchiGupta1804/barber-booking.git
+cd barber-booking
 ```
 2. **Run the project using Docker (Recommended)**
 Make sure Docker and Docker Compose are installed and running.
